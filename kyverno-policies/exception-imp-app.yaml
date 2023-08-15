@@ -1,0 +1,21 @@
+# This policy adds an annotation to resources named "important-app" in the "delta" namespace, marking them as exceptions to the container count check.
+
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: delta-exception
+  namespace: delta
+spec:
+  exceptions:
+  - policyName: max-conatiners-per-pod
+    ruleNames:
+    - check-max-containers
+  match:
+    any:
+    - resources:
+        kinds:
+        - Pod
+        namespaces:
+        - delta
+        names:
+        - important-app*
